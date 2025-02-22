@@ -20,7 +20,7 @@ submitBtn.addEventListener('click', (e) => {
     e.preventDefault()
     let obj = {}
     obj = { ...getInfo()}
-    const character = new Character(obj.CharacterName, obj.role, obj.power)
+    const character = new Character(obj.CharacterName, obj.role, obj.powers)
     count++
     buildCard(character.info, character.getDescription)
 })
@@ -28,9 +28,15 @@ submitBtn.addEventListener('click', (e) => {
 const getInfo =()=> {
     const CharacterName = document.getElementById('characterName').value
     const role = document.getElementById('role').value
-    const power = document.querySelector('input[name="power"]:checked').value
+    const power = document.querySelectorAll('input[name="power"]')
 
-    return { CharacterName, role, power, }
+    let powers = []
+
+    power.forEach(p => {
+        p.checked ? powers = [...powers, p.value] : null
+    })
+
+    return { CharacterName, role, powers, }
 }
 
 const buildCard = (obj, func) => {
